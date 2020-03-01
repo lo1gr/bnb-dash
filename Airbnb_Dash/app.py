@@ -3,11 +3,12 @@ import dash
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
-from dash.exceptions import PreventUpdate
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+
 from bs4 import BeautifulSoup
 
 import time
@@ -28,7 +29,7 @@ app.layout = html.Div([
     dcc.Dropdown(
     id = 'dropdown',
     options=[
-        {'label': 'FOURSEAS', 'value': 'https://www.abritel.fr/pe/731.1142116.1307405/pd'},
+        {'label': 'FOURSEAS', 'value': abritel_fourseas},
         {'label': 'ANKAY', 'value': 'ANKAY'},
         {'label': 'JALNAS', 'value': 'JALNAS'}
     ],
@@ -43,12 +44,11 @@ app.layout = html.Div([
 @app.callback(
     Output('output-container-button', 'children'),
     [Input('submit-button','n_clicks')],
-    [State('dropdown','value')])
-def update_output(n_clicks, value):
+    [State('dropdown','value'),
+     State('input-box','value')])
+def update_output(n_clicks, value, price):
     if n_clicks is None:
         return "Faire les changements"
-    # else:
-    #     return str(value[0])
     else:
         driver = webdriver.Chrome(ChromeDriverManager().install())
 
@@ -67,10 +67,33 @@ def update_output(n_clicks, value):
         #
         # time.sleep(3)
         #
-        # driver.find_element_by_xpath("//*[@id='site-header__traveler']/span[1]").click()
-        # driver.get('https://www.abritel.fr/haod/properties.html')
+        # driver.get(str(value[0]))
+        # time.sleep(2)
+        #
+        # # if there is this element then close it, otherwise
+        #
+        # try:
+        #     elem = driver.find_element_by_xpath("//*[@id='one-nightly-rate']/div/div/input")
+        #     elem.clear()
+        #     time.sleep(1)
+        #     elem.send_keys(price)
+        #     time.sleep(4)
+        #     register = driver.find_element_by_xpath("//*[@id='rates-settings-save-button']")
+        #     register.click()
+        #
+        # except (NoSuchElementException, ElementClickInterceptedException):
+        #     driver.find_element_by_xpath("//*[@id='gdpr-close']").click()
+        #     elem = driver.find_element_by_xpath("//*[@id='one-nightly-rate']/div/div/input")
+        #     elem.clear()
+        #     time.sleep(1)
+        #     elem.send_keys(price)
+        #     time.sleep(4)
+        #     register = driver.find_element_by_xpath("//*[@id='rates-settings-save-button']")
+        #     register.click()
 
-        # need to check if urls can change!!!
+
+
+
 
 
 
@@ -81,15 +104,29 @@ def update_output(n_clicks, value):
         driver.get("http://www.airbnb.com/login")
         time.sleep(2)
         # if find element with id phone-login-phone-number then need to put phone number, otherwise email is good
-        elem = driver.find_element_by_id("email-login-email")
-        time.sleep(3)
+        try:
+            elem = driver.find_element_by_id("email")
+        except NoSuchElementException:
+            elem = driver.find_element_by_id("email-login-email")
         elem.send_keys(airbnb_email)
 
-        elem = driver.find_element_by_id("email-login-password")
+        time.sleep(2)
+
+        try:
+            elem = driver.find_element_by_id("password")
+        except NoSuchElementException:
+            elem = driver.find_element_by_id("email-login-password")
         elem.send_keys(airbnb_pw)
 
-        submit = driver.find_element_by_class_name("_1o4htsfg")
+        try:
+            submit = driver.find_element_by_xpath("//*[@id='site-content']/div/div/div/div/div/div/div/form[1]/div[3]/button")
+        except NoSuchElementException:
+            submit = driver.find_element_by_class_name("_1o4htsfg")
         submit.click()
+        
+        time.sleep(3)
+
+        driver.get("https://www.airbnb.com/manage-your-space/32203079/pricing")
 
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
