@@ -20,11 +20,19 @@ from villas_urls import *
 
 # select several components -> several villas
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css',
+                        'https://codepen.io/IvanNieto/pen/bRPJyb.css']
+
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
+    html.Div(
+        className='section',
+        children=[
+            html.H1('MEGA UPDATOR DE PRIX', className='landing-text')
+        ]
+    ),
     html.Div(dcc.Input(id='input-box', type='text')),
     dcc.Dropdown(
     id = 'dropdown',
@@ -123,7 +131,7 @@ def update_output(n_clicks, value, price):
         except NoSuchElementException:
             submit = driver.find_element_by_class_name("_1o4htsfg")
         submit.click()
-        
+
         time.sleep(3)
 
         driver.get("https://www.airbnb.com/manage-your-space/32203079/pricing")
