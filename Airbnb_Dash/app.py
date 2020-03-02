@@ -20,8 +20,8 @@ from villas_urls import *
 
 # select several components -> several villas
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css',
-                        'https://codepen.io/IvanNieto/pen/bRPJyb.css']
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+# Dash will automatically source the css files located in assets/ 
 
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
