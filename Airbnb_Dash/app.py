@@ -21,7 +21,7 @@ from villas_urls import *
 # select several components -> several villas
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-# Dash will automatically source the css files located in assets/ 
+# Dash will automatically source the css files located in assets/
 
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -37,7 +37,7 @@ app.layout = html.Div([
     dcc.Dropdown(
     id = 'dropdown',
     options=[
-        {'label': 'FOURSEAS', 'value': abritel_fourseas},
+        {'label': 'FOURSEAS', 'value': fourseas},
         {'label': 'ANKAY', 'value': 'ANKAY'},
         {'label': 'JALNAS', 'value': 'JALNAS'}
     ],
@@ -60,6 +60,8 @@ def update_output(n_clicks, value, price):
     else:
         driver = webdriver.Chrome(ChromeDriverManager().install())
 
+        abri, airb = str(value[0]).split(',')
+
         # driver.get("https://www.abritel.fr/auth/ui/login")
         # elem = driver.find_element_by_id("lex-emailAddress")
         # elem.send_keys(abritel_email)
@@ -75,7 +77,7 @@ def update_output(n_clicks, value, price):
         #
         # time.sleep(3)
         #
-        # driver.get(str(value[0]))
+        # driver.get(abri)
         # time.sleep(2)
         #
         # # if there is this element then close it, otherwise
@@ -109,36 +111,43 @@ def update_output(n_clicks, value, price):
         ## works!!!
 
         ## airbnb part, also works:
-        driver.get("http://www.airbnb.com/login")
-        time.sleep(2)
-        # if find element with id phone-login-phone-number then need to put phone number, otherwise email is good
-        try:
-            elem = driver.find_element_by_id("email")
-        except NoSuchElementException:
-            elem = driver.find_element_by_id("email-login-email")
-        elem.send_keys(airbnb_email)
+        # abri, airb = str(value).split(',')
+        # abri, airb = str(value[0]).split(',')
+        # driver.get("http://www.airbnb.com/login")
+        # time.sleep(2)
+        # # if find element with id phone-login-phone-number then need to put phone number, otherwise email is good
+        # try:
+        #     driver.find_element_by_xpath("//*[@id='site-content']/div/div/div/div/div/div/div/div[2]/button").click()
+        # except NoSuchElementException:
+        #     pass
+        #
+        # try:
+        #     driver.find_element_by_id("email").send_keys(airbnb_email)
+        # except NoSuchElementException:
+        #     driver.find_element_by_id("email-login-email").send_keys(airbnb_email)
+        #
+        # time.sleep(2)
+        #
+        # try:
+        #     driver.find_element_by_id("password").send_keys(airbnb_pw)
+        # except NoSuchElementException:
+        #     driver.find_element_by_id("email-login-password").send_keys(airbnb_pw)
+        #
+        # try:
+        #     submit = driver.find_element_by_xpath("//*[@id='site-content']/div/div/div/div/div/div/div/form[1]/div[3]/button")
+        # except NoSuchElementException:
+        #     submit = driver.find_element_by_class_name("_1o4htsfg")
+        # submit.click()
+        #
+        # time.sleep(3)
+        #
+        # # return str(value[0])
+        #
+        # driver.get(airb)
+        #
+        # soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-        time.sleep(2)
-
-        try:
-            elem = driver.find_element_by_id("password")
-        except NoSuchElementException:
-            elem = driver.find_element_by_id("email-login-password")
-        elem.send_keys(airbnb_pw)
-
-        try:
-            submit = driver.find_element_by_xpath("//*[@id='site-content']/div/div/div/div/div/div/div/form[1]/div[3]/button")
-        except NoSuchElementException:
-            submit = driver.find_element_by_class_name("_1o4htsfg")
-        submit.click()
-
-        time.sleep(3)
-
-        driver.get("https://www.airbnb.com/manage-your-space/32203079/pricing")
-
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-        return str(soup)
+        return str(airb)
 
 
 if __name__ == '__main__':

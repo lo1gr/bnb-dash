@@ -1,12 +1,15 @@
 .section {
-  height: 70vh;
+  height: 50vh;
   min-height: 50vh;
-  background: linear-gradient(to top, #191a1a 0%, transparent 75%), url('robot_beach1.jpg');
+  background: linear-gradient(to top, #191a1a 0%, transparent 75%), url('https://upload.wikimedia.org/wikipedia/commons/4/42/Comet_Crash.jpg');
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
   background-color: #464646;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.landing-text{
+  color: white;
 }
