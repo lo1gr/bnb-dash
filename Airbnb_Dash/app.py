@@ -38,8 +38,14 @@ app.layout = html.Div([
     id = 'dropdown',
     options=[
         {'label': 'FOURSEAS', 'value': fourseas},
-        {'label': 'ANKAY', 'value': 'ANKAY'},
-        {'label': 'JALNAS', 'value': 'JALNAS'}
+        {'label': 'ANKAY', 'value': ankay},
+        {'label': 'JALNAS', 'value': jalnas}
+        {'label': 'TARA_ANAIS', 'value': tara_anais},
+        {'label': 'PERLE', 'value': perle},
+        {'label': 'LOCASUN', 'value': locasun}
+        {'label': 'MAMILI', 'value': mamili},
+        {'label': 'MELEA', 'value': melea},
+        {'label': 'SUPER', 'value': super}
     ],
     multi=True
 ),
