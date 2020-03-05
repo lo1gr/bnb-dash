@@ -39,10 +39,10 @@ app.layout = html.Div([
     options=[
         {'label': 'FOURSEAS', 'value': fourseas},
         {'label': 'ANKAY', 'value': ankay},
-        {'label': 'JALNAS', 'value': jalnas}
+        {'label': 'JALNAS', 'value': jalnas},
         {'label': 'TARA_ANAIS', 'value': tara_anais},
         {'label': 'PERLE', 'value': perle},
-        {'label': 'LOCASUN', 'value': locasun}
+        {'label': 'LOCASUN', 'value': locasun},
         {'label': 'MAMILI', 'value': mamili},
         {'label': 'MELEA', 'value': melea},
         {'label': 'SUPER', 'value': super}
